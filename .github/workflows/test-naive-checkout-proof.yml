@@ -1,0 +1,28 @@
+name: naive-checkout-proof
+
+# Temporary, adversarial-test-only workflow (v0.2 Day 3). Proves the premise
+# behind action.yml's own authoritative checkout: that a bare
+# actions/checkout@v4 with no `ref:` override, on a `pull_request` trigger,
+# lands on GitHub's synthetic merge-preview commit rather than the PR's
+# actual head commit. Deleted once confirmed — not meant to ship.
+
+on:
+  pull_request:
+
+jobs:
+  naive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compare naive checkout HEAD against the real PR head sha
+        run: |
+          actual="$(git rev-parse HEAD)"
+          expected="${{ github.event.pull_request.head.sha }}"
+          echo "naive checkout HEAD: $actual"
+          echo "real PR head sha:    $expected"
+          if [ "$actual" = "$expected" ]; then
+            echo "SAME — naive checkout happened to land on the real PR head"
+          else
+            echo "DIFFERENT — naive checkout landed on a synthetic commit, not the real PR head"
+          fi
