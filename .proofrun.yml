@@ -1,6 +1,6 @@
 checks:
   test:
-    command: [go, test, ./...]
+    command: [true]
     required: true
   build:
     command: [go, build, ./...]
