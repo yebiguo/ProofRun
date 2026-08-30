@@ -9,9 +9,6 @@ name: dogfood
 
 on:
   pull_request:
-    paths-ignore:
-      - "**/*.md"
-      - "docs/**"
 
 concurrency:
   group: dogfood-${{ github.event.pull_request.number || github.ref }}

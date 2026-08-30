@@ -7,9 +7,6 @@ on:
       - "**/*.md"
       - "docs/**"
   pull_request:
-    paths-ignore:
-      - "**/*.md"
-      - "docs/**"
 
 concurrency:
   group: test-${{ github.event.pull_request.number || github.ref }}
